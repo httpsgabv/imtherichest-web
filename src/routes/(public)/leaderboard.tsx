@@ -9,7 +9,7 @@ import { useAppStore, selectCurrentUser } from "@/store/app-store";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-export const Route = createFileRoute("/leaderboard")({
+export const Route = createFileRoute("/(public)/leaderboard")({
   head: () => ({
     meta: [
       { title: "Global leaderboard — ImTheRichest" },

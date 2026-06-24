@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { AppNav } from "@/components/app-nav";
 import { SiteFooter } from "@/components/site-footer";
 
-export const Route = createFileRoute("/privacy")({
+export const Route = createFileRoute("/(public)/privacy")({
   head: () => ({
     meta: [
       { title: "Privacy Policy — ImTheRichest" },

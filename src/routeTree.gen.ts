@@ -9,156 +9,156 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as TermsRouteImport } from './routes/terms'
-import { Route as RegisterRouteImport } from './routes/register'
-import { Route as PrivacyRouteImport } from './routes/privacy'
-import { Route as PaymentsRouteImport } from './routes/payments'
-import { Route as LoginRouteImport } from './routes/login'
-import { Route as LeaderboardRouteImport } from './routes/leaderboard'
-import { Route as CookiesRouteImport } from './routes/cookies'
-import { Route as ContactRouteImport } from './routes/contact'
-import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
-import { Route as IndexRouteImport } from './routes/index'
-import { Route as UUsernameRouteImport } from './routes/u.$username'
-import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated.settings'
-import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated.profile'
-import { Route as AuthenticatedPayRouteImport } from './routes/_authenticated.pay'
-import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated.dashboard'
-import { Route as AuthenticatedAchievementsRouteImport } from './routes/_authenticated.achievements'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as publicIndexRouteImport } from './routes/(public)/index'
+import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
+import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated/profile'
+import { Route as AuthenticatedPayRouteImport } from './routes/_authenticated/pay'
+import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedAchievementsRouteImport } from './routes/_authenticated/achievements'
+import { Route as publicTermsRouteImport } from './routes/(public)/terms'
+import { Route as publicPrivacyRouteImport } from './routes/(public)/privacy'
+import { Route as publicPaymentsRouteImport } from './routes/(public)/payments'
+import { Route as publicLeaderboardRouteImport } from './routes/(public)/leaderboard'
+import { Route as publicCookiesRouteImport } from './routes/(public)/cookies'
+import { Route as publicContactRouteImport } from './routes/(public)/contact'
+import { Route as publicRegisterIndexRouteImport } from './routes/(public)/register/index'
+import { Route as publicLoginIndexRouteImport } from './routes/(public)/login/index'
+import { Route as publicUUsernameRouteImport } from './routes/(public)/u.$username'
 
-const TermsRoute = TermsRouteImport.update({
-  id: '/terms',
-  path: '/terms',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const RegisterRoute = RegisterRouteImport.update({
-  id: '/register',
-  path: '/register',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PrivacyRoute = PrivacyRouteImport.update({
-  id: '/privacy',
-  path: '/privacy',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PaymentsRoute = PaymentsRouteImport.update({
-  id: '/payments',
-  path: '/payments',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LoginRoute = LoginRouteImport.update({
-  id: '/login',
-  path: '/login',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LeaderboardRoute = LeaderboardRouteImport.update({
-  id: '/leaderboard',
-  path: '/leaderboard',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CookiesRoute = CookiesRouteImport.update({
-  id: '/cookies',
-  path: '/cookies',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ContactRoute = ContactRouteImport.update({
-  id: '/contact',
-  path: '/contact',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AuthenticatedRoute = AuthenticatedRouteImport.update({
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
   id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
+const publicIndexRoute = publicIndexRouteImport.update({
+  id: '/(public)/',
   path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const UUsernameRoute = UUsernameRouteImport.update({
-  id: '/u/$username',
-  path: '/u/$username',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedSettingsRoute = AuthenticatedSettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
-  getParentRoute: () => AuthenticatedRoute,
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedProfileRoute = AuthenticatedProfileRouteImport.update({
   id: '/profile',
   path: '/profile',
-  getParentRoute: () => AuthenticatedRoute,
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedPayRoute = AuthenticatedPayRouteImport.update({
   id: '/pay',
   path: '/pay',
-  getParentRoute: () => AuthenticatedRoute,
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
-  getParentRoute: () => AuthenticatedRoute,
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedAchievementsRoute =
   AuthenticatedAchievementsRouteImport.update({
     id: '/achievements',
     path: '/achievements',
-    getParentRoute: () => AuthenticatedRoute,
+    getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const publicTermsRoute = publicTermsRouteImport.update({
+  id: '/(public)/terms',
+  path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const publicPrivacyRoute = publicPrivacyRouteImport.update({
+  id: '/(public)/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const publicPaymentsRoute = publicPaymentsRouteImport.update({
+  id: '/(public)/payments',
+  path: '/payments',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const publicLeaderboardRoute = publicLeaderboardRouteImport.update({
+  id: '/(public)/leaderboard',
+  path: '/leaderboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const publicCookiesRoute = publicCookiesRouteImport.update({
+  id: '/(public)/cookies',
+  path: '/cookies',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const publicContactRoute = publicContactRouteImport.update({
+  id: '/(public)/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const publicRegisterIndexRoute = publicRegisterIndexRouteImport.update({
+  id: '/(public)/register/',
+  path: '/register/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const publicLoginIndexRoute = publicLoginIndexRouteImport.update({
+  id: '/(public)/login/',
+  path: '/login/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const publicUUsernameRoute = publicUUsernameRouteImport.update({
+  id: '/(public)/u/$username',
+  path: '/u/$username',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/contact': typeof ContactRoute
-  '/cookies': typeof CookiesRoute
-  '/leaderboard': typeof LeaderboardRoute
-  '/login': typeof LoginRoute
-  '/payments': typeof PaymentsRoute
-  '/privacy': typeof PrivacyRoute
-  '/register': typeof RegisterRoute
-  '/terms': typeof TermsRoute
+  '/': typeof publicIndexRoute
+  '/contact': typeof publicContactRoute
+  '/cookies': typeof publicCookiesRoute
+  '/leaderboard': typeof publicLeaderboardRoute
+  '/payments': typeof publicPaymentsRoute
+  '/privacy': typeof publicPrivacyRoute
+  '/terms': typeof publicTermsRoute
   '/achievements': typeof AuthenticatedAchievementsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/pay': typeof AuthenticatedPayRoute
   '/profile': typeof AuthenticatedProfileRoute
   '/settings': typeof AuthenticatedSettingsRoute
-  '/u/$username': typeof UUsernameRoute
+  '/u/$username': typeof publicUUsernameRoute
+  '/login/': typeof publicLoginIndexRoute
+  '/register/': typeof publicRegisterIndexRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/contact': typeof ContactRoute
-  '/cookies': typeof CookiesRoute
-  '/leaderboard': typeof LeaderboardRoute
-  '/login': typeof LoginRoute
-  '/payments': typeof PaymentsRoute
-  '/privacy': typeof PrivacyRoute
-  '/register': typeof RegisterRoute
-  '/terms': typeof TermsRoute
+  '/': typeof publicIndexRoute
+  '/contact': typeof publicContactRoute
+  '/cookies': typeof publicCookiesRoute
+  '/leaderboard': typeof publicLeaderboardRoute
+  '/payments': typeof publicPaymentsRoute
+  '/privacy': typeof publicPrivacyRoute
+  '/terms': typeof publicTermsRoute
   '/achievements': typeof AuthenticatedAchievementsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/pay': typeof AuthenticatedPayRoute
   '/profile': typeof AuthenticatedProfileRoute
   '/settings': typeof AuthenticatedSettingsRoute
-  '/u/$username': typeof UUsernameRoute
+  '/u/$username': typeof publicUUsernameRoute
+  '/login': typeof publicLoginIndexRoute
+  '/register': typeof publicRegisterIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
-  '/_authenticated': typeof AuthenticatedRouteWithChildren
-  '/contact': typeof ContactRoute
-  '/cookies': typeof CookiesRoute
-  '/leaderboard': typeof LeaderboardRoute
-  '/login': typeof LoginRoute
-  '/payments': typeof PaymentsRoute
-  '/privacy': typeof PrivacyRoute
-  '/register': typeof RegisterRoute
-  '/terms': typeof TermsRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/(public)/contact': typeof publicContactRoute
+  '/(public)/cookies': typeof publicCookiesRoute
+  '/(public)/leaderboard': typeof publicLeaderboardRoute
+  '/(public)/payments': typeof publicPaymentsRoute
+  '/(public)/privacy': typeof publicPrivacyRoute
+  '/(public)/terms': typeof publicTermsRoute
   '/_authenticated/achievements': typeof AuthenticatedAchievementsRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/pay': typeof AuthenticatedPayRoute
   '/_authenticated/profile': typeof AuthenticatedProfileRoute
   '/_authenticated/settings': typeof AuthenticatedSettingsRoute
-  '/u/$username': typeof UUsernameRoute
+  '/(public)/': typeof publicIndexRoute
+  '/(public)/u/$username': typeof publicUUsernameRoute
+  '/(public)/login/': typeof publicLoginIndexRoute
+  '/(public)/register/': typeof publicRegisterIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -167,10 +167,8 @@ export interface FileRouteTypes {
     | '/contact'
     | '/cookies'
     | '/leaderboard'
-    | '/login'
     | '/payments'
     | '/privacy'
-    | '/register'
     | '/terms'
     | '/achievements'
     | '/dashboard'
@@ -178,16 +176,16 @@ export interface FileRouteTypes {
     | '/profile'
     | '/settings'
     | '/u/$username'
+    | '/login/'
+    | '/register/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/contact'
     | '/cookies'
     | '/leaderboard'
-    | '/login'
     | '/payments'
     | '/privacy'
-    | '/register'
     | '/terms'
     | '/achievements'
     | '/dashboard'
@@ -195,117 +193,56 @@ export interface FileRouteTypes {
     | '/profile'
     | '/settings'
     | '/u/$username'
+    | '/login'
+    | '/register'
   id:
     | '__root__'
-    | '/'
     | '/_authenticated'
-    | '/contact'
-    | '/cookies'
-    | '/leaderboard'
-    | '/login'
-    | '/payments'
-    | '/privacy'
-    | '/register'
-    | '/terms'
+    | '/(public)/contact'
+    | '/(public)/cookies'
+    | '/(public)/leaderboard'
+    | '/(public)/payments'
+    | '/(public)/privacy'
+    | '/(public)/terms'
     | '/_authenticated/achievements'
     | '/_authenticated/dashboard'
     | '/_authenticated/pay'
     | '/_authenticated/profile'
     | '/_authenticated/settings'
-    | '/u/$username'
+    | '/(public)/'
+    | '/(public)/u/$username'
+    | '/(public)/login/'
+    | '/(public)/register/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
-  ContactRoute: typeof ContactRoute
-  CookiesRoute: typeof CookiesRoute
-  LeaderboardRoute: typeof LeaderboardRoute
-  LoginRoute: typeof LoginRoute
-  PaymentsRoute: typeof PaymentsRoute
-  PrivacyRoute: typeof PrivacyRoute
-  RegisterRoute: typeof RegisterRoute
-  TermsRoute: typeof TermsRoute
-  UUsernameRoute: typeof UUsernameRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  publicContactRoute: typeof publicContactRoute
+  publicCookiesRoute: typeof publicCookiesRoute
+  publicLeaderboardRoute: typeof publicLeaderboardRoute
+  publicPaymentsRoute: typeof publicPaymentsRoute
+  publicPrivacyRoute: typeof publicPrivacyRoute
+  publicTermsRoute: typeof publicTermsRoute
+  publicIndexRoute: typeof publicIndexRoute
+  publicUUsernameRoute: typeof publicUUsernameRoute
+  publicLoginIndexRoute: typeof publicLoginIndexRoute
+  publicRegisterIndexRoute: typeof publicRegisterIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/terms': {
-      id: '/terms'
-      path: '/terms'
-      fullPath: '/terms'
-      preLoaderRoute: typeof TermsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/register': {
-      id: '/register'
-      path: '/register'
-      fullPath: '/register'
-      preLoaderRoute: typeof RegisterRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/privacy': {
-      id: '/privacy'
-      path: '/privacy'
-      fullPath: '/privacy'
-      preLoaderRoute: typeof PrivacyRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/payments': {
-      id: '/payments'
-      path: '/payments'
-      fullPath: '/payments'
-      preLoaderRoute: typeof PaymentsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/login': {
-      id: '/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof LoginRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/leaderboard': {
-      id: '/leaderboard'
-      path: '/leaderboard'
-      fullPath: '/leaderboard'
-      preLoaderRoute: typeof LeaderboardRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/cookies': {
-      id: '/cookies'
-      path: '/cookies'
-      fullPath: '/cookies'
-      preLoaderRoute: typeof CookiesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/contact': {
-      id: '/contact'
-      path: '/contact'
-      fullPath: '/contact'
-      preLoaderRoute: typeof ContactRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/_authenticated': {
       id: '/_authenticated'
       path: ''
       fullPath: '/'
-      preLoaderRoute: typeof AuthenticatedRouteImport
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
+    '/(public)/': {
+      id: '/(public)/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/u/$username': {
-      id: '/u/$username'
-      path: '/u/$username'
-      fullPath: '/u/$username'
-      preLoaderRoute: typeof UUsernameRouteImport
+      preLoaderRoute: typeof publicIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/settings': {
@@ -313,40 +250,103 @@ declare module '@tanstack/react-router' {
       path: '/settings'
       fullPath: '/settings'
       preLoaderRoute: typeof AuthenticatedSettingsRouteImport
-      parentRoute: typeof AuthenticatedRoute
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/profile': {
       id: '/_authenticated/profile'
       path: '/profile'
       fullPath: '/profile'
       preLoaderRoute: typeof AuthenticatedProfileRouteImport
-      parentRoute: typeof AuthenticatedRoute
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/pay': {
       id: '/_authenticated/pay'
       path: '/pay'
       fullPath: '/pay'
       preLoaderRoute: typeof AuthenticatedPayRouteImport
-      parentRoute: typeof AuthenticatedRoute
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/dashboard': {
       id: '/_authenticated/dashboard'
       path: '/dashboard'
       fullPath: '/dashboard'
       preLoaderRoute: typeof AuthenticatedDashboardRouteImport
-      parentRoute: typeof AuthenticatedRoute
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/achievements': {
       id: '/_authenticated/achievements'
       path: '/achievements'
       fullPath: '/achievements'
       preLoaderRoute: typeof AuthenticatedAchievementsRouteImport
-      parentRoute: typeof AuthenticatedRoute
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/(public)/terms': {
+      id: '/(public)/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof publicTermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(public)/privacy': {
+      id: '/(public)/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof publicPrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(public)/payments': {
+      id: '/(public)/payments'
+      path: '/payments'
+      fullPath: '/payments'
+      preLoaderRoute: typeof publicPaymentsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(public)/leaderboard': {
+      id: '/(public)/leaderboard'
+      path: '/leaderboard'
+      fullPath: '/leaderboard'
+      preLoaderRoute: typeof publicLeaderboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(public)/cookies': {
+      id: '/(public)/cookies'
+      path: '/cookies'
+      fullPath: '/cookies'
+      preLoaderRoute: typeof publicCookiesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(public)/contact': {
+      id: '/(public)/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof publicContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(public)/register/': {
+      id: '/(public)/register/'
+      path: '/register'
+      fullPath: '/register/'
+      preLoaderRoute: typeof publicRegisterIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(public)/login/': {
+      id: '/(public)/login/'
+      path: '/login'
+      fullPath: '/login/'
+      preLoaderRoute: typeof publicLoginIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(public)/u/$username': {
+      id: '/(public)/u/$username'
+      path: '/u/$username'
+      fullPath: '/u/$username'
+      preLoaderRoute: typeof publicUUsernameRouteImport
+      parentRoute: typeof rootRouteImport
     }
   }
 }
 
-interface AuthenticatedRouteChildren {
+interface AuthenticatedRouteRouteChildren {
   AuthenticatedAchievementsRoute: typeof AuthenticatedAchievementsRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedPayRoute: typeof AuthenticatedPayRoute
@@ -354,7 +354,7 @@ interface AuthenticatedRouteChildren {
   AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRoute
 }
 
-const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAchievementsRoute: AuthenticatedAchievementsRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedPayRoute: AuthenticatedPayRoute,
@@ -362,22 +362,21 @@ const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedSettingsRoute: AuthenticatedSettingsRoute,
 }
 
-const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
-  AuthenticatedRouteChildren,
-)
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  AuthenticatedRoute: AuthenticatedRouteWithChildren,
-  ContactRoute: ContactRoute,
-  CookiesRoute: CookiesRoute,
-  LeaderboardRoute: LeaderboardRoute,
-  LoginRoute: LoginRoute,
-  PaymentsRoute: PaymentsRoute,
-  PrivacyRoute: PrivacyRoute,
-  RegisterRoute: RegisterRoute,
-  TermsRoute: TermsRoute,
-  UUsernameRoute: UUsernameRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  publicContactRoute: publicContactRoute,
+  publicCookiesRoute: publicCookiesRoute,
+  publicLeaderboardRoute: publicLeaderboardRoute,
+  publicPaymentsRoute: publicPaymentsRoute,
+  publicPrivacyRoute: publicPrivacyRoute,
+  publicTermsRoute: publicTermsRoute,
+  publicIndexRoute: publicIndexRoute,
+  publicUUsernameRoute: publicUUsernameRoute,
+  publicLoginIndexRoute: publicLoginIndexRoute,
+  publicRegisterIndexRoute: publicRegisterIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

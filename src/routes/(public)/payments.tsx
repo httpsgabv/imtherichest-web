@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { AppNav } from "@/components/app-nav";
 import { SiteFooter } from "@/components/site-footer";
 
-export const Route = createFileRoute("/payments")({
+export const Route = createFileRoute("/(public)/payments")({
   head: () => ({
     meta: [
       { title: "Payment & Points Policy — ImTheRichest" },

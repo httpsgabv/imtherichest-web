@@ -4,7 +4,7 @@ import { AppNav } from "@/components/app-nav";
 import { SiteFooter } from "@/components/site-footer";
 import { toast } from "sonner";
 
-export const Route = createFileRoute("/contact")({
+export const Route = createFileRoute("/(public)/contact")({
   head: () => ({
     meta: [
       { title: "Contact — ImTheRichest" },

@@ -3,7 +3,7 @@ import { Link } from "@tanstack/react-router";
 import { AppNav } from "@/components/app-nav";
 import { SiteFooter } from "@/components/site-footer";
 
-export const Route = createFileRoute("/cookies")({
+export const Route = createFileRoute("/(public)/cookies")({
   head: () => ({
     meta: [
       { title: "Cookie Policy — ImTheRichest" },

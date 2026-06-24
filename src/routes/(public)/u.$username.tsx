@@ -5,7 +5,7 @@ import { PublicProfileView } from "@/components/public-profile-view";
 import { getUserByUsername } from "@/services/leaderboard-service";
 import { useAppStore, selectCurrentUser } from "@/store/app-store";
 
-export const Route = createFileRoute("/u/$username")({
+export const Route = createFileRoute("/(public)/u/$username")({
   head: ({ params }) => ({
     meta: [
       { title: `@${params.username} — ImTheRichest` },

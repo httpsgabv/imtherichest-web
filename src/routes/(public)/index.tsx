@@ -8,7 +8,7 @@ import { getRankedUsers } from "@/services/leaderboard-service";
 import { achievementDefs } from "@/data/achievements";
 import { useAppStore } from "@/store/app-store";
 
-export const Route = createFileRoute("/")({
+export const Route = createFileRoute("/(public)/")({
   head: () => ({
     meta: [
       { title: "ImTheRichest — Money talks. Rankings listen." },
