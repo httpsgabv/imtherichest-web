@@ -9,7 +9,7 @@ import { useAppStore, selectCurrentUser } from "@/store/app-store";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-export const Route = createFileRoute("/(public)/leaderboard")({
+export const Route = createFileRoute("/(public)/leaderboard/")({
   head: () => ({
     meta: [
       { title: "Global leaderboard — ImTheRichest" },
@@ -39,10 +39,7 @@ function LeaderboardPage() {
   const filtered = useMemo(() => {
     const q = search.toLowerCase().trim();
     if (!q) return ranked;
-    return ranked.filter(
-      (u) =>
-        u.username.includes(q) || u.displayName.toLowerCase().includes(q),
-    );
+    return ranked.filter((u) => u.username.includes(q) || u.displayName.toLowerCase().includes(q));
   }, [ranked, search]);
 
   return (
@@ -66,11 +63,7 @@ function LeaderboardPage() {
         </div>
         <div className="bg-zinc-900/30 ring-1 ring-white/5">
           {next7.map((u) => (
-            <LeaderboardRow
-              key={u.id}
-              user={u}
-              highlight={currentUser?.id === u.id}
-            />
+            <LeaderboardRow key={u.id} user={u} highlight={currentUser?.id === u.id} />
           ))}
         </div>
       </section>
@@ -90,21 +83,25 @@ function LeaderboardPage() {
             />
             <Tabs value={tab} onValueChange={setTab}>
               <TabsList className="rounded-none bg-zinc-900">
-                <TabsTrigger value="today" className="rounded-none text-xs">Today</TabsTrigger>
-                <TabsTrigger value="week" className="rounded-none text-xs">Weekly</TabsTrigger>
-                <TabsTrigger value="month" className="rounded-none text-xs">Monthly</TabsTrigger>
-                <TabsTrigger value="all" className="rounded-none text-xs">All time</TabsTrigger>
+                <TabsTrigger value="today" className="rounded-none text-xs">
+                  Today
+                </TabsTrigger>
+                <TabsTrigger value="week" className="rounded-none text-xs">
+                  Weekly
+                </TabsTrigger>
+                <TabsTrigger value="month" className="rounded-none text-xs">
+                  Monthly
+                </TabsTrigger>
+                <TabsTrigger value="all" className="rounded-none text-xs">
+                  All time
+                </TabsTrigger>
               </TabsList>
             </Tabs>
           </div>
         </div>
         <div className="bg-zinc-900/30 ring-1 ring-white/5">
           {filtered.slice(0, 50).map((u) => (
-            <LeaderboardRow
-              key={u.id}
-              user={u}
-              highlight={currentUser?.id === u.id}
-            />
+            <LeaderboardRow key={u.id} user={u} highlight={currentUser?.id === u.id} />
           ))}
           {filtered.length === 0 ? (
             <div className="px-6 py-12 text-center text-sm text-zinc-500">
