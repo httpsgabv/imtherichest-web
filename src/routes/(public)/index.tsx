@@ -42,7 +42,8 @@ function LandingPage() {
           Money Talks. <span className="gold-shimmer">Rankings Listen.</span>
         </h1>
         <p className="mt-6 max-w-[56ch] text-pretty text-base text-zinc-400 sm:text-lg">
-          The definitive global ledger for the world's most ambitious. Every dollar committed is a step toward immortality on the immutable podium of prestige.
+          The definitive global ledger for the world's most ambitious. Every dollar committed is a
+          step toward immortality on the immutable podium of prestige.
         </p>
         <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
           <Link
@@ -66,7 +67,10 @@ function LandingPage() {
             <h2 className="text-2xl font-medium text-zinc-100">Live top 3</h2>
             <div className="mt-2 h-px w-12 bg-gold" />
           </div>
-          <Link to="/leaderboard" className="text-xs uppercase tracking-widest text-gold hover:text-gold-light">
+          <Link
+            to="/leaderboard"
+            className="text-xs uppercase tracking-widest text-gold hover:text-gold-light"
+          >
             See full rankings →
           </Link>
         </div>
@@ -86,9 +90,7 @@ function LandingPage() {
                   {s.num}
                 </span>
                 <h3 className="mt-4 text-lg font-medium text-zinc-100">{s.title}</h3>
-                <p className="mt-2 max-w-[35ch] text-sm text-zinc-400 leading-relaxed">
-                  {s.body}
-                </p>
+                <p className="mt-2 max-w-[35ch] text-sm text-zinc-400 leading-relaxed">{s.body}</p>
               </div>
             ))}
           </div>
@@ -98,7 +100,10 @@ function LandingPage() {
       <section className="mx-auto max-w-7xl px-6 py-24">
         <div className="mb-12 flex items-end justify-between">
           <h2 className="text-3xl font-medium text-zinc-100">Rare accolades</h2>
-          <Link to="/achievements" className="text-xs uppercase tracking-widest text-gold hover:text-gold-light">
+          <Link
+            to="/achievements"
+            className="text-xs uppercase tracking-widest text-gold hover:text-gold-light"
+          >
             View all badges →
           </Link>
         </div>
@@ -115,8 +120,24 @@ function LandingPage() {
 }
 
 const steps = [
-  { num: "01", title: "Establish entry", body: "Create your account and claim your username to begin your ascent." },
-  { num: "02", title: "Acquire points", body: "Every dollar contributed becomes one immutable point on the global ledger." },
-  { num: "03", title: "Secure rank", body: "Watch the leaderboard shift in real time as you overtake your rivals." },
-  { num: "04", title: "Claim legacy", body: "Unlock exclusive achievements that mark your presence in history." },
+  {
+    num: "01",
+    title: "Establish entry",
+    body: "Create your account and claim your username to begin your ascent.",
+  },
+  {
+    num: "02",
+    title: "Acquire points",
+    body: "Every dollar contributed becomes one immutable point on the global ledger.",
+  },
+  {
+    num: "03",
+    title: "Secure rank",
+    body: "Watch the leaderboard shift in real time as you overtake your rivals.",
+  },
+  {
+    num: "04",
+    title: "Claim legacy",
+    body: "Unlock exclusive achievements that mark your presence in history.",
+  },
 ];

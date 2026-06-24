@@ -76,10 +76,17 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "ImTheRichest — Money talks. Rankings listen." },
-      { name: "description", content: "The competitive leaderboard where every dollar becomes a point of prestige. Climb the ranks and become the richest player." },
+      {
+        name: "description",
+        content:
+          "The competitive leaderboard where every dollar becomes a point of prestige. Climb the ranks and become the richest player.",
+      },
       { name: "author", content: "ImTheRichest" },
       { property: "og:title", content: "ImTheRichest" },
-      { property: "og:description", content: "The competitive leaderboard where every dollar becomes a point of prestige." },
+      {
+        property: "og:description",
+        content: "The competitive leaderboard where every dollar becomes a point of prestige.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],

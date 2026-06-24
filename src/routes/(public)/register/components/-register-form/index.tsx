@@ -2,8 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormField } from "@/components/form-field";
-import { registerUser } from "@/services/auth-service";
-import { useAppStore } from "@/store/app-store";
+import { authClient } from "@/lib/auth-client";
 import { registerSchema, type RegisterSchema } from "../../-schemas/register-schema";
 
 interface RegisterFormProps {
@@ -18,18 +17,26 @@ export function RegisterForm({ onRegister }: RegisterFormProps) {
     formState: { errors, isSubmitting },
   } = useForm<RegisterSchema>({
     resolver: zodResolver(registerSchema),
-    defaultValues: { username: "", displayName: "", email: "" },
+    defaultValues: { username: "", email: "", password: "", confirmPassword: "" },
   });
 
-  const onSubmit = (data: RegisterSchema) => {
-    const taken = Object.values(useAppStore.getState().users).some(
-      (u) => u.username === data.username.toLowerCase(),
-    );
-    if (taken) {
-      setError("username", { message: "That username is already taken." });
+  const onSubmit = async (data: RegisterSchema) => {
+    const { error } = await authClient.signUp.email({
+      name: data.username,
+      email: data.email,
+      password: data.password,
+      username: data.username,
+    } as Parameters<typeof authClient.signUp.email>[0]);
+
+    if (error) {
+      if (error.status === 409) {
+        setError("email", { message: error.message ?? "Email already in use" });
+      } else {
+        setError("root", { message: error.message ?? "Registration failed" });
+      }
       return;
     }
-    registerUser(data);
+
     onRegister();
   };
 
@@ -50,19 +57,6 @@ export function RegisterForm({ onRegister }: RegisterFormProps) {
           )}
         />
         <Controller
-          name="displayName"
-          control={control}
-          render={({ field }) => (
-            <FormField
-              label="Display name"
-              value={field.value}
-              onChange={field.onChange}
-              placeholder="Your Name"
-              error={errors.displayName?.message}
-            />
-          )}
-        />
-        <Controller
           name="email"
           control={control}
           render={({ field }) => (
@@ -76,12 +70,39 @@ export function RegisterForm({ onRegister }: RegisterFormProps) {
             />
           )}
         />
+        <Controller
+          name="password"
+          control={control}
+          render={({ field }) => (
+            <FormField
+              label="Password"
+              value={field.value}
+              onChange={field.onChange}
+              type="password"
+              error={errors.password?.message}
+            />
+          )}
+        />
+        <Controller
+          name="confirmPassword"
+          control={control}
+          render={({ field }) => (
+            <FormField
+              label="Confirm password"
+              value={field.value}
+              onChange={field.onChange}
+              type="password"
+              error={errors.confirmPassword?.message}
+            />
+          )}
+        />
+        {errors.root ? <p className="text-xs text-destructive">{errors.root.message}</p> : null}
         <button
           type="submit"
           disabled={isSubmitting}
           className="w-full bg-gold py-3 text-sm font-semibold text-zinc-950 hover:bg-gold-light transition-colors disabled:opacity-50"
         >
-          Create account
+          {isSubmitting ? "Creating account…" : "Create account"}
         </button>
       </form>
       <p className="mt-6 text-xs text-zinc-500">
