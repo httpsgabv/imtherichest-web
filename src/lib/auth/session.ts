@@ -1,4 +1,4 @@
-import { authClient } from "@/lib/auth-client";
+import { authClient } from "@/lib/auth/client";
 
 export type AuthSession = Awaited<ReturnType<typeof authClient.getSession>>["data"];
 

@@ -4,7 +4,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { PublicProfileView } from "@/components/public-profile-view";
 import { getUserByUsername } from "@/services/leaderboard-service";
 import { useQuery } from "@tanstack/react-query";
-import { sessionQueryOptions } from "@/lib/auth-session";
+import { sessionQueryOptions } from "@/lib/auth/session";
 import { useAppStore } from "@/store/app-store";
 
 export const Route = createFileRoute("/(public)/u/$username/")({

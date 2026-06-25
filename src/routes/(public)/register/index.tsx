@@ -2,7 +2,7 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { AppNav } from "@/components/app-nav";
 import { SiteFooter } from "@/components/site-footer";
 import { RegisterForm } from "./components/-register-form";
-import { guestOnlyBeforeLoad } from "@/lib/auth-guards";
+import { guestOnlyBeforeLoad } from "@/lib/auth/guards";
 
 export const Route = createFileRoute("/(public)/register/")({
   beforeLoad: guestOnlyBeforeLoad,

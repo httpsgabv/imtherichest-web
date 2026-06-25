@@ -4,7 +4,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { StatCard } from "@/components/stat-card";
 import { AchievementCard } from "@/components/achievement-card";
 import { useQuery } from "@tanstack/react-query";
-import { sessionQueryOptions } from "@/lib/auth-session";
+import { sessionQueryOptions } from "@/lib/auth/session";
 import { useAppStore } from "@/store/app-store";
 import { getUserRank, getNextRivalDelta } from "@/services/leaderboard-service";
 import { achievementById } from "@/data/achievements";

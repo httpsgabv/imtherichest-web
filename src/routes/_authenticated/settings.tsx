@@ -19,8 +19,8 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { authClient } from "@/lib/auth-client";
-import { sessionQueryKey, sessionQueryOptions } from "@/lib/auth-session";
+import { authClient } from "@/lib/auth/client";
+import { sessionQueryKey, sessionQueryOptions } from "@/lib/auth/session";
 import { useAppStore } from "@/store/app-store";
 import { toast } from "sonner";
 

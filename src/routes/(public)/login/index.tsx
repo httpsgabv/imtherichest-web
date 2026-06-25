@@ -2,7 +2,7 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { AppNav } from "@/components/app-nav";
 import { SiteFooter } from "@/components/site-footer";
 import { LoginForm } from "./components/-login-form";
-import { guestOnlyBeforeLoad, validateRedirectSearch } from "@/lib/auth-guards";
+import { guestOnlyBeforeLoad, validateRedirectSearch } from "@/lib/auth/guards";
 
 export const Route = createFileRoute("/(public)/login/")({
   validateSearch: validateRedirectSearch,

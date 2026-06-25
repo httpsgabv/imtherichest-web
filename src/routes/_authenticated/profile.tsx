@@ -3,7 +3,7 @@ import { AppNav } from "@/components/app-nav";
 import { SiteFooter } from "@/components/site-footer";
 import { PublicProfileView } from "@/components/public-profile-view";
 import { useQuery } from "@tanstack/react-query";
-import { sessionQueryOptions } from "@/lib/auth-session";
+import { sessionQueryOptions } from "@/lib/auth/session";
 import { useAppStore } from "@/store/app-store";
 import { getUserRank } from "@/services/leaderboard-service";
 

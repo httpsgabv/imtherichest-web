@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { authClient } from "@/lib/auth-client";
-import { sessionQueryKey, sessionQueryOptions } from "@/lib/auth-session";
+import { authClient } from "@/lib/auth/client";
+import { sessionQueryKey, sessionQueryOptions } from "@/lib/auth/session";
 import { AvatarCircle } from "@/components/avatar-circle";
 
 export const AppNav = () => {

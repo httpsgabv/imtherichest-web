@@ -3,8 +3,8 @@ import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQueryClient } from "@tanstack/react-query";
 import { FormField } from "@/components/form-field";
-import { authClient } from "@/lib/auth-client";
-import { sessionQueryKey } from "@/lib/auth-session";
+import { authClient } from "@/lib/auth/client";
+import { sessionQueryKey } from "@/lib/auth/session";
 import { loginSchema, type LoginSchema } from "../../-schemas/login-schema";
 
 interface LoginFormProps {

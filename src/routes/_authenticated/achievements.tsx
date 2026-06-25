@@ -4,7 +4,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { AchievementCard } from "@/components/achievement-card";
 import { achievementDefs, type AchievementDef } from "@/data/achievements";
 import { useQuery } from "@tanstack/react-query";
-import { sessionQueryOptions } from "@/lib/auth-session";
+import { sessionQueryOptions } from "@/lib/auth/session";
 import { useAppStore } from "@/store/app-store";
 
 export const Route = createFileRoute("/_authenticated/achievements")({

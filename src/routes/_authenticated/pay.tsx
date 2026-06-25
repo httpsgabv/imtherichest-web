@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { useQuery } from "@tanstack/react-query";
-import { sessionQueryOptions } from "@/lib/auth-session";
+import { sessionQueryOptions } from "@/lib/auth/session";
 import { useAppStore } from "@/store/app-store";
 import { makePayment, type PaymentResult } from "@/services/payments-service";
 import { achievementById } from "@/data/achievements";

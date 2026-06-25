@@ -6,7 +6,7 @@ import { PodiumTop3 } from "@/components/podium-top-3";
 import { LeaderboardRow } from "@/components/leaderboard-row";
 import { getRankedUsers } from "@/services/leaderboard-service";
 import { useQuery } from "@tanstack/react-query";
-import { sessionQueryOptions } from "@/lib/auth-session";
+import { sessionQueryOptions } from "@/lib/auth/session";
 import { useAppStore } from "@/store/app-store";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
