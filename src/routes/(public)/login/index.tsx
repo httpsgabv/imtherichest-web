@@ -1,17 +1,12 @@
-import { createFileRoute, redirect, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { AppNav } from "@/components/app-nav";
 import { SiteFooter } from "@/components/site-footer";
 import { LoginForm } from "./components/-login-form";
-import { getSession } from "@/lib/auth.functions";
+import { guestOnlyBeforeLoad, validateRedirectSearch } from "@/lib/auth-guards";
 
 export const Route = createFileRoute("/(public)/login/")({
-  validateSearch: (search: Record<string, unknown>): { redirect?: string } => ({
-    redirect: typeof search.redirect === "string" ? search.redirect : undefined,
-  }),
-  beforeLoad: async () => {
-    const session = await getSession();
-    if (session) throw redirect({ to: "/dashboard" });
-  },
+  validateSearch: validateRedirectSearch,
+  beforeLoad: guestOnlyBeforeLoad,
   head: () => ({
     meta: [
       { title: "Sign in — ImTheRichest" },
