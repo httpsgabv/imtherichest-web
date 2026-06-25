@@ -1,9 +1,14 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, redirect, useNavigate } from "@tanstack/react-router";
 import { AppNav } from "@/components/app-nav";
 import { SiteFooter } from "@/components/site-footer";
 import { RegisterForm } from "./components/-register-form";
+import { getSession } from "@/lib/auth.functions";
 
 export const Route = createFileRoute("/(public)/register/")({
+  beforeLoad: async () => {
+    const session = await getSession();
+    if (session) throw redirect({ to: "/dashboard" });
+  },
   head: () => ({
     meta: [
       { title: "Register — ImTheRichest" },

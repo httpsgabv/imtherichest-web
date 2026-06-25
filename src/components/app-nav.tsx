@@ -1,18 +1,18 @@
 import { Link, useNavigate } from "@tanstack/react-router";
-import { useAppStore, selectCurrentUser } from "@/store/app-store";
-import { signOutUser } from "@/services/auth-service";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { authClient } from "@/lib/auth-client";
+import { sessionQueryKey, sessionQueryOptions } from "@/lib/auth-session";
 import { AvatarCircle } from "@/components/avatar-circle";
-import { useEffect, useState } from "react";
 
 export const AppNav = () => {
   const navigate = useNavigate();
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
-  const currentUser = useAppStore(selectCurrentUser);
+  const queryClient = useQueryClient();
+  const { data: session } = useQuery(sessionQueryOptions);
 
-  const handleSignOut = () => {
-    signOutUser();
-    navigate({ to: "/" });
+  const handleSignOut = async () => {
+    await authClient.signOut();
+    await queryClient.invalidateQueries({ queryKey: sessionQueryKey });
+    navigate({ to: "/login" });
   };
 
   return (
@@ -40,7 +40,7 @@ export const AppNav = () => {
             >
               Achievements
             </Link>
-            {mounted && currentUser ? (
+            {session ? (
               <Link
                 to="/dashboard"
                 className="text-xs font-medium text-zinc-400 transition-colors hover:text-gold"
@@ -52,7 +52,7 @@ export const AppNav = () => {
           </div>
         </div>
         <div className="flex items-center gap-4">
-          {mounted && currentUser ? (
+          {session ? (
             <>
               <Link
                 to="/pay"
@@ -62,8 +62,8 @@ export const AppNav = () => {
               </Link>
               <Link to="/profile" className="flex items-center gap-2">
                 <AvatarCircle
-                  name={currentUser.displayName}
-                  src={currentUser.avatarUrl}
+                  name={session.user.name}
+                  src={session.user.image ?? null}
                   size="sm"
                 />
               </Link>

@@ -1,9 +1,17 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, redirect, useNavigate } from "@tanstack/react-router";
 import { AppNav } from "@/components/app-nav";
 import { SiteFooter } from "@/components/site-footer";
 import { LoginForm } from "./components/-login-form";
+import { getSession } from "@/lib/auth.functions";
 
 export const Route = createFileRoute("/(public)/login/")({
+  validateSearch: (search: Record<string, unknown>): { redirect?: string } => ({
+    redirect: typeof search.redirect === "string" ? search.redirect : undefined,
+  }),
+  beforeLoad: async () => {
+    const session = await getSession();
+    if (session) throw redirect({ to: "/dashboard" });
+  },
   head: () => ({
     meta: [
       { title: "Sign in — ImTheRichest" },
@@ -15,6 +23,9 @@ export const Route = createFileRoute("/(public)/login/")({
 
 function LoginPage() {
   const navigate = useNavigate();
+  const { redirect: redirectTo } = Route.useSearch();
+  const destination =
+    redirectTo?.startsWith("/") && !redirectTo.startsWith("//") ? redirectTo : "/dashboard";
 
   return (
     <div className="min-h-screen bg-surface text-zinc-300">
@@ -22,7 +33,8 @@ function LoginPage() {
       <div className="mx-auto flex max-w-md flex-col items-center px-6 pt-24 pb-32">
         <h1 className="text-3xl font-medium text-zinc-100">Welcome back</h1>
         <p className="mt-2 text-sm text-zinc-500">Sign in to continue your ascent.</p>
-        <LoginForm onLogin={() => navigate({ to: "/dashboard" })} />
+        {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+        <LoginForm onLogin={() => navigate({ to: destination as any })} />
       </div>
       <SiteFooter />
     </div>

@@ -3,7 +3,9 @@ import { AppNav } from "@/components/app-nav";
 import { SiteFooter } from "@/components/site-footer";
 import { StatCard } from "@/components/stat-card";
 import { AchievementCard } from "@/components/achievement-card";
-import { useAppStore, selectCurrentUser } from "@/store/app-store";
+import { useQuery } from "@tanstack/react-query";
+import { sessionQueryOptions } from "@/lib/auth-session";
+import { useAppStore } from "@/store/app-store";
 import { getUserRank, getNextRivalDelta } from "@/services/leaderboard-service";
 import { achievementById } from "@/data/achievements";
 import { formatCurrency, formatNumber } from "@/lib/format";
@@ -14,8 +16,10 @@ export const Route = createFileRoute("/_authenticated/dashboard")({
 });
 
 function DashboardPage() {
+  const { data: session } = useQuery(sessionQueryOptions);
   useAppStore((s) => s.users);
-  const currentUser = useAppStore(selectCurrentUser);
+  const userId = session?.user?.id;
+  const currentUser = useAppStore((s) => (userId ? (s.users[userId] ?? null) : null));
   if (!currentUser) return null;
   const rank = getUserRank(currentUser.id);
   const rival = getNextRivalDelta(currentUser.id);
@@ -26,7 +30,10 @@ function DashboardPage() {
     .filter((a): a is NonNullable<typeof a> => Boolean(a));
 
   const progress = rival
-    ? Math.max(5, Math.min(95, (currentUser.points / (currentUser.points + rival.pointsNeeded)) * 100))
+    ? Math.max(
+        5,
+        Math.min(95, (currentUser.points / (currentUser.points + rival.pointsNeeded)) * 100),
+      )
     : 100;
 
   return (
@@ -62,7 +69,9 @@ function DashboardPage() {
           {rival ? (
             <>
               <p className="mt-3 text-xl text-zinc-100">
-                You need <span className="text-gold font-bold">+{formatNumber(rival.pointsNeeded)}</span> points to pass
+                You need{" "}
+                <span className="text-gold font-bold">+{formatNumber(rival.pointsNeeded)}</span>{" "}
+                points to pass
                 <span className="text-zinc-100"> #{rival.rivalRank}</span>.
               </p>
               <div className="mt-6 h-2 w-full bg-zinc-800">
@@ -80,7 +89,10 @@ function DashboardPage() {
       <section className="mx-auto max-w-7xl px-6 pb-24">
         <div className="mb-6 flex items-end justify-between">
           <h2 className="text-lg font-medium text-zinc-100">Latest achievements</h2>
-          <Link to="/achievements" className="text-xs uppercase tracking-widest text-gold hover:text-gold-light">
+          <Link
+            to="/achievements"
+            className="text-xs uppercase tracking-widest text-gold hover:text-gold-light"
+          >
             View all →
           </Link>
         </div>

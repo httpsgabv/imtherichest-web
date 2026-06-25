@@ -2,7 +2,9 @@ import { createFileRoute } from "@tanstack/react-router";
 import { AppNav } from "@/components/app-nav";
 import { SiteFooter } from "@/components/site-footer";
 import { PublicProfileView } from "@/components/public-profile-view";
-import { useAppStore, selectCurrentUser } from "@/store/app-store";
+import { useQuery } from "@tanstack/react-query";
+import { sessionQueryOptions } from "@/lib/auth-session";
+import { useAppStore } from "@/store/app-store";
 import { getUserRank } from "@/services/leaderboard-service";
 
 export const Route = createFileRoute("/_authenticated/profile")({
@@ -11,8 +13,10 @@ export const Route = createFileRoute("/_authenticated/profile")({
 });
 
 function MyProfilePage() {
+  const { data: session } = useQuery(sessionQueryOptions);
   useAppStore((s) => s.users);
-  const currentUser = useAppStore(selectCurrentUser);
+  const userId = session?.user?.id;
+  const currentUser = useAppStore((s) => (userId ? (s.users[userId] ?? null) : null));
   if (!currentUser) return null;
   const rank = getUserRank(currentUser.id);
   return (

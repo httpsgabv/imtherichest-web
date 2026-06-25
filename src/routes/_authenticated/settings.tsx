@@ -18,7 +18,10 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { useAppStore, selectCurrentUser } from "@/store/app-store";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { authClient } from "@/lib/auth-client";
+import { sessionQueryKey, sessionQueryOptions } from "@/lib/auth-session";
+import { useAppStore } from "@/store/app-store";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/_authenticated/settings")({
@@ -27,13 +30,15 @@ export const Route = createFileRoute("/_authenticated/settings")({
 });
 
 function SettingsPage() {
-  const currentUser = useAppStore(selectCurrentUser);
+  const queryClient = useQueryClient();
+  const { data: session } = useQuery(sessionQueryOptions);
+  const userId = session?.user?.id;
+  const currentUser = useAppStore((s) => (userId ? (s.users[userId] ?? null) : null));
   const setUser = useAppStore((s) => s.setUser);
   const privacy = useAppStore((s) => s.privacy);
   const setPrivacy = useAppStore((s) => s.setPrivacy);
   const notifications = useAppStore((s) => s.notifications);
   const setNotifications = useAppStore((s) => s.setNotifications);
-  const signOut = useAppStore((s) => s.signOut);
   const navigate = useNavigate();
 
   const [displayName, setDisplayName] = useState(currentUser?.displayName ?? "");
@@ -68,8 +73,9 @@ function SettingsPage() {
     toast.success("Your data has been exported");
   };
 
-  const deleteAccount = () => {
-    signOut();
+  const deleteAccount = async () => {
+    await authClient.signOut();
+    await queryClient.invalidateQueries({ queryKey: sessionQueryKey });
     toast.success("Account deleted");
     navigate({ to: "/" });
   };

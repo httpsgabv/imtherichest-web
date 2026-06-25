@@ -1,8 +1,10 @@
 import { Link } from "@tanstack/react-router";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useQueryClient } from "@tanstack/react-query";
 import { FormField } from "@/components/form-field";
 import { authClient } from "@/lib/auth-client";
+import { sessionQueryKey } from "@/lib/auth-session";
 import { loginSchema, type LoginSchema } from "../../-schemas/login-schema";
 
 interface LoginFormProps {
@@ -10,6 +12,7 @@ interface LoginFormProps {
 }
 
 export function LoginForm({ onLogin }: LoginFormProps) {
+  const queryClient = useQueryClient();
   const {
     control,
     handleSubmit,
@@ -35,6 +38,7 @@ export function LoginForm({ onLogin }: LoginFormProps) {
       return;
     }
 
+    await queryClient.invalidateQueries({ queryKey: sessionQueryKey });
     onLogin();
   };
 

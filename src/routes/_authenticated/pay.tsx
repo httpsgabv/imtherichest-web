@@ -5,7 +5,9 @@ import { SiteFooter } from "@/components/site-footer";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
-import { useAppStore, selectCurrentUser } from "@/store/app-store";
+import { useQuery } from "@tanstack/react-query";
+import { sessionQueryOptions } from "@/lib/auth-session";
+import { useAppStore } from "@/store/app-store";
 import { makePayment, type PaymentResult } from "@/services/payments-service";
 import { achievementById } from "@/data/achievements";
 import { formatCurrency, formatNumber } from "@/lib/format";
@@ -19,7 +21,9 @@ const QUICK = [5, 10, 25, 50, 100];
 
 function PayPage() {
   const navigate = useNavigate();
-  const currentUser = useAppStore(selectCurrentUser);
+  const { data: session } = useQuery(sessionQueryOptions);
+  const userId = session?.user?.id;
+  const currentUser = useAppStore((s) => (userId ? (s.users[userId] ?? null) : null));
   const [amount, setAmount] = useState<number>(25);
   const [custom, setCustom] = useState<string>("");
   const [result, setResult] = useState<PaymentResult | null>(null);

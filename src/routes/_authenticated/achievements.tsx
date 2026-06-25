@@ -3,7 +3,9 @@ import { AppNav } from "@/components/app-nav";
 import { SiteFooter } from "@/components/site-footer";
 import { AchievementCard } from "@/components/achievement-card";
 import { achievementDefs, type AchievementDef } from "@/data/achievements";
-import { useAppStore, selectCurrentUser } from "@/store/app-store";
+import { useQuery } from "@tanstack/react-query";
+import { sessionQueryOptions } from "@/lib/auth-session";
+import { useAppStore } from "@/store/app-store";
 
 export const Route = createFileRoute("/_authenticated/achievements")({
   head: () => ({ meta: [{ title: "Achievements — ImTheRichest" }] }),
@@ -11,8 +13,10 @@ export const Route = createFileRoute("/_authenticated/achievements")({
 });
 
 function AchievementsPage() {
+  const { data: session } = useQuery(sessionQueryOptions);
   useAppStore((s) => s.users);
-  const currentUser = useAppStore(selectCurrentUser);
+  const userId = session?.user?.id;
+  const currentUser = useAppStore((s) => (userId ? (s.users[userId] ?? null) : null));
   const unlockedSet = new Set(currentUser?.achievements ?? []);
   const normal = achievementDefs.filter((a) => a.category === "normal");
   const weird = achievementDefs.filter((a) => a.category === "weird");

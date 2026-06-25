@@ -5,7 +5,9 @@ import { SiteFooter } from "@/components/site-footer";
 import { PodiumTop3 } from "@/components/podium-top-3";
 import { LeaderboardRow } from "@/components/leaderboard-row";
 import { getRankedUsers } from "@/services/leaderboard-service";
-import { useAppStore, selectCurrentUser } from "@/store/app-store";
+import { useQuery } from "@tanstack/react-query";
+import { sessionQueryOptions } from "@/lib/auth-session";
+import { useAppStore } from "@/store/app-store";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
@@ -22,8 +24,8 @@ export const Route = createFileRoute("/(public)/leaderboard/")({
 });
 
 function LeaderboardPage() {
+  const { data: session } = useQuery(sessionQueryOptions);
   useAppStore((s) => s.users);
-  const currentUser = useAppStore(selectCurrentUser);
   const incOpens = useAppStore((s) => s.incLeaderboardOpens);
   useEffect(() => {
     incOpens();
@@ -63,7 +65,7 @@ function LeaderboardPage() {
         </div>
         <div className="bg-zinc-900/30 ring-1 ring-white/5">
           {next7.map((u) => (
-            <LeaderboardRow key={u.id} user={u} highlight={currentUser?.id === u.id} />
+            <LeaderboardRow key={u.id} user={u} highlight={session?.user?.id === u.id} />
           ))}
         </div>
       </section>
@@ -101,7 +103,7 @@ function LeaderboardPage() {
         </div>
         <div className="bg-zinc-900/30 ring-1 ring-white/5">
           {filtered.slice(0, 50).map((u) => (
-            <LeaderboardRow key={u.id} user={u} highlight={currentUser?.id === u.id} />
+            <LeaderboardRow key={u.id} user={u} highlight={session?.user?.id === u.id} />
           ))}
           {filtered.length === 0 ? (
             <div className="px-6 py-12 text-center text-sm text-zinc-500">

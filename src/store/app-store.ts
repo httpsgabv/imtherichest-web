@@ -40,15 +40,12 @@ export interface NotificationSettings {
 export interface AppState {
   users: Record<string, UserRecord>;
   payments: PaymentRecord[];
-  currentUserId: string | null;
   privacy: PrivacySettings;
   notifications: NotificationSettings;
   leaderboardOpens: number;
   setUser: (id: string, patch: Partial<UserRecord>) => void;
   addUser: (user: UserRecord) => void;
   addPayment: (payment: PaymentRecord) => void;
-  signIn: (id: string) => void;
-  signOut: () => void;
   setPrivacy: (patch: Partial<PrivacySettings>) => void;
   setNotifications: (patch: Partial<NotificationSettings>) => void;
   incLeaderboardOpens: () => void;
@@ -68,7 +65,6 @@ export const useAppStore = create<AppState>()(
     (set, get) => ({
       users: buildInitial(),
       payments: [],
-      currentUserId: null,
       privacy: {
         publicProfile: true,
         showTotalPaid: true,
@@ -97,8 +93,6 @@ export const useAppStore = create<AppState>()(
         set((state) => ({ users: { ...state.users, [user.id]: user } })),
       addPayment: (payment) =>
         set((state) => ({ payments: [...state.payments, payment] })),
-      signIn: (id) => set({ currentUserId: id }),
-      signOut: () => set({ currentUserId: null }),
       setPrivacy: (patch) => set((state) => ({ privacy: { ...state.privacy, ...patch } })),
       setNotifications: (patch) =>
         set((state) => ({ notifications: { ...state.notifications, ...patch } })),
@@ -120,16 +114,13 @@ export const useAppStore = create<AppState>()(
         }));
         return true;
       },
-      reset: () => set({ users: buildInitial(), payments: [], currentUserId: null }),
+      reset: () => set({ users: buildInitial(), payments: [] }),
     }),
     {
       name: "imtherichest-store-v1",
     },
   ),
 );
-
-export const selectCurrentUser = (state: AppState): UserRecord | null =>
-  state.currentUserId ? state.users[state.currentUserId] ?? null : null;
 
 export const selectRankedUsers = (state: AppState): UserRecord[] =>
   Object.values(state.users).sort((a, b) => b.points - a.points);
