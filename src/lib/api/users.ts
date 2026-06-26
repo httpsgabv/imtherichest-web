@@ -44,6 +44,34 @@ export interface UserAchievements {
 
 export type AchievementDefinition = UserAchievements["definitions"][number];
 
+export interface PublicProfile {
+  id: string;
+  username: string;
+  displayName: string | null;
+  bio: string | null;
+  country: string | null;
+  avatarUrl: string | null;
+  points: number;
+  totalPaid: number | null;
+  rank: number;
+  isOwner: boolean;
+  createdAt: string;
+  updatedAt: string | null;
+  privacySettings: {
+    publicProfile: boolean;
+    showTotalPaid: boolean;
+    showAchievements: boolean;
+    showActivity: boolean;
+  } | null;
+}
+
+export interface Payment {
+  id: string;
+  amount: number;
+  points: number;
+  createdAt: string;
+}
+
 export const profileQueryOptions = {
   queryKey: ["users", "me"] as const,
   queryFn: () => apiFetch<Profile>("/api/v1/users/me"),
@@ -62,3 +90,27 @@ export const myAchievementsQueryOptions = {
   queryFn: () => apiFetch<UserAchievements>("/api/v1/users/me/achievements"),
   staleTime: 60_000,
 };
+
+export const publicProfileQueryOptions = (username: string) => ({
+  queryKey: ["users", username] as const,
+  queryFn: () => apiFetch<PublicProfile>(`/api/v1/users/${username}`),
+  staleTime: 60_000,
+  enabled: !!username,
+});
+
+export const publicUserAchievementsQueryOptions = (username: string) => ({
+  queryKey: ["users", username, "achievements"] as const,
+  queryFn: () => apiFetch<UserAchievements>(`/api/v1/users/${username}/achievements`),
+  staleTime: 60_000,
+  enabled: !!username,
+});
+
+export const publicUserPaymentsQueryOptions = (username: string) => ({
+  queryKey: ["users", username, "payments"] as const,
+  queryFn: () =>
+    apiFetch<{ payments: Payment[]; nextCursor: string | null }>(
+      `/api/v1/users/${username}/payments?limit=8`,
+    ),
+  staleTime: 60_000,
+  enabled: !!username,
+});

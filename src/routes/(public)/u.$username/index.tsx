@@ -1,11 +1,7 @@
-import { createFileRoute, notFound, Link } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { AppNav } from "@/components/app-nav";
 import { SiteFooter } from "@/components/site-footer";
 import { PublicProfileView } from "@/components/public-profile-view";
-import { getUserByUsername } from "@/services/leaderboard-service";
-import { useQuery } from "@tanstack/react-query";
-import { sessionQueryOptions } from "@/lib/auth/session";
-import { useAppStore } from "@/store/app-store";
 
 export const Route = createFileRoute("/(public)/u/$username/")({
   head: ({ params }) => ({
@@ -36,14 +32,10 @@ export const Route = createFileRoute("/(public)/u/$username/")({
 
 function ProfilePage() {
   const { username } = Route.useParams();
-  const { data: session } = useQuery(sessionQueryOptions);
-  useAppStore((s) => s.users);
-  const user = getUserByUsername(username);
-  if (!user) throw notFound();
   return (
     <div className="min-h-screen bg-surface text-zinc-300">
       <AppNav />
-      <PublicProfileView user={user} isOwner={session?.user?.id === user.id} />
+      <PublicProfileView username={username} />
       <SiteFooter />
     </div>
   );

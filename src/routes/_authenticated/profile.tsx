@@ -4,8 +4,6 @@ import { SiteFooter } from "@/components/site-footer";
 import { PublicProfileView } from "@/components/public-profile-view";
 import { useQuery } from "@tanstack/react-query";
 import { sessionQueryOptions } from "@/lib/auth/session";
-import { useAppStore } from "@/store/app-store";
-import { getUserRank } from "@/services/leaderboard-service";
 
 export const Route = createFileRoute("/_authenticated/profile")({
   head: () => ({ meta: [{ title: "My profile — ImTheRichest" }] }),
@@ -14,15 +12,12 @@ export const Route = createFileRoute("/_authenticated/profile")({
 
 function MyProfilePage() {
   const { data: session } = useQuery(sessionQueryOptions);
-  useAppStore((s) => s.users);
-  const userId = session?.user?.id;
-  const currentUser = useAppStore((s) => (userId ? (s.users[userId] ?? null) : null));
-  if (!currentUser) return null;
-  const rank = getUserRank(currentUser.id);
+  const username = session?.user?.name ?? "";
+  if (!username) return null;
   return (
     <div className="min-h-screen bg-surface text-zinc-300">
       <AppNav />
-      <PublicProfileView user={{ ...currentUser, rank }} isOwner />
+      <PublicProfileView username={username} />
       <SiteFooter />
     </div>
   );
