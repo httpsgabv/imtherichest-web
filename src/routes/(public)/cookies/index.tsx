@@ -31,8 +31,8 @@ function CookiesPage() {
             <LegalText.Title>1. What are cookies?</LegalText.Title>
             <LegalText.Text>
               Cookies are small text files stored on your device when you visit a website. They help
-              the site remember your actions and preferences over time, such as keeping you signed in
-              or remembering your consent choices.
+              the site remember your actions and preferences over time, such as keeping you signed
+              in or remembering your consent choices.
             </LegalText.Text>
           </div>
 

@@ -51,17 +51,24 @@ function PayPage() {
             <span className="text-3xl font-black">★</span>
           </div>
           <h1 className="mt-8 text-4xl font-medium text-zinc-100">
-            You gained <span className="gold-shimmer">+{formatNumber(Math.round(result.payment.amount))}</span> points
+            You gained{" "}
+            <span className="gold-shimmer">+{formatNumber(Math.round(result.payment.amount))}</span>{" "}
+            points
           </h1>
           <p className="mt-3 text-sm text-zinc-500">
             New rank: <span className="text-gold font-bold">#{result.newRank}</span>
           </p>
           {unlocked.length > 0 ? (
             <div className="mt-10">
-              <p className="text-xs uppercase tracking-widest text-zinc-500">Achievements unlocked</p>
+              <p className="text-xs uppercase tracking-widest text-zinc-500">
+                Achievements unlocked
+              </p>
               <div className="mt-4 flex flex-wrap justify-center gap-3">
                 {unlocked.map((a) => (
-                  <span key={a.id} className="bg-zinc-900 ring-1 ring-gold/30 px-3 py-1.5 text-xs text-gold">
+                  <span
+                    key={a.id}
+                    className="bg-zinc-900 ring-1 ring-gold/30 px-3 py-1.5 text-xs text-gold"
+                  >
                     {a.title}
                   </span>
                 ))}
@@ -69,7 +76,10 @@ function PayPage() {
             </div>
           ) : null}
           <div className="mt-12 flex flex-wrap justify-center gap-3">
-            <Link to="/leaderboard" className="bg-gold px-5 py-2.5 text-sm font-semibold text-zinc-950 hover:bg-gold-light">
+            <Link
+              to="/leaderboard"
+              className="bg-gold px-5 py-2.5 text-sm font-semibold text-zinc-950 hover:bg-gold-light"
+            >
               View leaderboard
             </Link>
             <button
@@ -128,7 +138,9 @@ function PayPage() {
 
           {custom !== "" ? (
             <div className="mt-6">
-              <label className="text-xs uppercase tracking-widest text-zinc-500">Custom amount (USD)</label>
+              <label className="text-xs uppercase tracking-widest text-zinc-500">
+                Custom amount (USD)
+              </label>
               <Input
                 type="number"
                 min={1}
@@ -147,7 +159,9 @@ function PayPage() {
             </div>
             <div className="mt-2 flex items-center justify-between">
               <span className="text-sm text-zinc-500">Points earned</span>
-              <span className="text-xl font-black text-gold">+{formatNumber(Math.round(effective))}</span>
+              <span className="text-xl font-black text-gold">
+                +{formatNumber(Math.round(effective))}
+              </span>
             </div>
           </div>
 
@@ -158,8 +172,12 @@ function PayPage() {
               onCheckedChange={(checked) => setTermsAccepted(checked === true)}
               className="mt-0.5 border-zinc-600 data-[state=checked]:bg-gold data-[state=checked]:text-zinc-950 data-[state=checked]:border-gold"
             />
-            <Label htmlFor="terms" className="text-xs leading-relaxed text-zinc-400 font-normal cursor-pointer">
-              I understand that payments are voluntary, non-refundable except where required by law, and that points have no monetary value.
+            <Label
+              htmlFor="terms"
+              className="text-xs leading-relaxed text-zinc-400 font-normal cursor-pointer"
+            >
+              I understand that payments are voluntary, non-refundable except where required by law,
+              and that points have no monetary value.
             </Label>
           </div>
 

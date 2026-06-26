@@ -2,8 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { AppNav } from "@/components/app-nav";
 import { SiteFooter } from "@/components/site-footer";
 import { PodiumSection } from "@/components/podium-section";
-import { AchievementCard } from "@/components/achievement-card";
-import { achievementDefs } from "@/data/achievements";
+import { LandingAchievementsSection } from "@/components/landing-achievements-section";
 
 export const Route = createFileRoute("/(public)/")({
   head: () => ({
@@ -25,8 +24,6 @@ export const Route = createFileRoute("/(public)/")({
 });
 
 function LandingPage() {
-  const showcase = achievementDefs.slice(0, 6);
-
   return (
     <div className="min-h-screen bg-surface text-zinc-300">
       <AppNav />
@@ -101,11 +98,7 @@ function LandingPage() {
             View all badges →
           </Link>
         </div>
-        <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-6">
-          {showcase.map((a) => (
-            <AchievementCard key={a.id} achievement={a} unlocked={true} />
-          ))}
-        </div>
+        <LandingAchievementsSection />
       </section>
 
       <SiteFooter />
