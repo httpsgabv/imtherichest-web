@@ -1,12 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useMemo } from "react";
 import { AppNav } from "@/components/app-nav";
 import { SiteFooter } from "@/components/site-footer";
-import { PodiumTop3 } from "@/components/podium-top-3";
+import { PodiumSection } from "@/components/podium-section";
 import { AchievementCard } from "@/components/achievement-card";
-import { getRankedUsers } from "@/services/leaderboard-service";
 import { achievementDefs } from "@/data/achievements";
-import { useAppStore } from "@/store/app-store";
 
 export const Route = createFileRoute("/(public)/")({
   head: () => ({
@@ -28,9 +25,6 @@ export const Route = createFileRoute("/(public)/")({
 });
 
 function LandingPage() {
-  // Re-render when users change
-  useAppStore((s) => s.users);
-  const ranked = useMemo(() => getRankedUsers().slice(0, 3), []);
   const showcase = achievementDefs.slice(0, 6);
 
   return (
@@ -74,7 +68,7 @@ function LandingPage() {
             See full rankings →
           </Link>
         </div>
-        <PodiumTop3 users={ranked} />
+        <PodiumSection />
       </section>
 
       <section className="bg-zinc-950 py-24">

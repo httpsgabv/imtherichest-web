@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { AppNav } from "@/components/app-nav";
 import { SiteFooter } from "@/components/site-footer";
-import { PodiumSection } from "./components/-podium-section";
+import { PodiumSection } from "@/components/podium-section";
 import { Top10Section } from "./components/-top10-section";
 import { RankingsSection } from "./components/-rankings-section";
 
@@ -27,7 +27,9 @@ function LeaderboardPage() {
         </h1>
         <p className="mt-3 text-sm text-zinc-500">The biggest spenders compete here.</p>
       </header>
-      <PodiumSection />
+      <section className="mx-auto max-w-7xl px-6 py-12">
+        <PodiumSection />
+      </section>
       <Top10Section />
       <RankingsSection />
       <SiteFooter />
