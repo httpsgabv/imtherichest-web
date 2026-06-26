@@ -11,9 +11,9 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as publicIndexRouteImport } from './routes/(public)/index'
-import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
-import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated/profile'
 import { Route as AuthenticatedPayRouteImport } from './routes/_authenticated/pay'
+import { Route as AuthenticatedSettingsIndexRouteImport } from './routes/_authenticated/settings/index'
+import { Route as AuthenticatedProfileIndexRouteImport } from './routes/_authenticated/profile/index'
 import { Route as AuthenticatedDashboardIndexRouteImport } from './routes/_authenticated/dashboard/index'
 import { Route as AuthenticatedAchievementsIndexRouteImport } from './routes/_authenticated/achievements/index'
 import { Route as publicTermsIndexRouteImport } from './routes/(public)/terms/index'
@@ -35,21 +35,23 @@ const publicIndexRoute = publicIndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedSettingsRoute = AuthenticatedSettingsRouteImport.update({
-  id: '/settings',
-  path: '/settings',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
-const AuthenticatedProfileRoute = AuthenticatedProfileRouteImport.update({
-  id: '/profile',
-  path: '/profile',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
 const AuthenticatedPayRoute = AuthenticatedPayRouteImport.update({
   id: '/pay',
   path: '/pay',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedSettingsIndexRoute =
+  AuthenticatedSettingsIndexRouteImport.update({
+    id: '/settings/',
+    path: '/settings/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedProfileIndexRoute =
+  AuthenticatedProfileIndexRouteImport.update({
+    id: '/profile/',
+    path: '/profile/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedDashboardIndexRoute =
   AuthenticatedDashboardIndexRouteImport.update({
     id: '/dashboard/',
@@ -111,8 +113,6 @@ const publicUUsernameIndexRoute = publicUUsernameIndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof publicIndexRoute
   '/pay': typeof AuthenticatedPayRoute
-  '/profile': typeof AuthenticatedProfileRoute
-  '/settings': typeof AuthenticatedSettingsRoute
   '/contact/': typeof publicContactIndexRoute
   '/cookies/': typeof publicCookiesIndexRoute
   '/leaderboard/': typeof publicLeaderboardIndexRoute
@@ -123,13 +123,13 @@ export interface FileRoutesByFullPath {
   '/terms/': typeof publicTermsIndexRoute
   '/achievements/': typeof AuthenticatedAchievementsIndexRoute
   '/dashboard/': typeof AuthenticatedDashboardIndexRoute
+  '/profile/': typeof AuthenticatedProfileIndexRoute
+  '/settings/': typeof AuthenticatedSettingsIndexRoute
   '/u/$username/': typeof publicUUsernameIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof publicIndexRoute
   '/pay': typeof AuthenticatedPayRoute
-  '/profile': typeof AuthenticatedProfileRoute
-  '/settings': typeof AuthenticatedSettingsRoute
   '/contact': typeof publicContactIndexRoute
   '/cookies': typeof publicCookiesIndexRoute
   '/leaderboard': typeof publicLeaderboardIndexRoute
@@ -140,14 +140,14 @@ export interface FileRoutesByTo {
   '/terms': typeof publicTermsIndexRoute
   '/achievements': typeof AuthenticatedAchievementsIndexRoute
   '/dashboard': typeof AuthenticatedDashboardIndexRoute
+  '/profile': typeof AuthenticatedProfileIndexRoute
+  '/settings': typeof AuthenticatedSettingsIndexRoute
   '/u/$username': typeof publicUUsernameIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/_authenticated/pay': typeof AuthenticatedPayRoute
-  '/_authenticated/profile': typeof AuthenticatedProfileRoute
-  '/_authenticated/settings': typeof AuthenticatedSettingsRoute
   '/(public)/': typeof publicIndexRoute
   '/(public)/contact/': typeof publicContactIndexRoute
   '/(public)/cookies/': typeof publicCookiesIndexRoute
@@ -159,6 +159,8 @@ export interface FileRoutesById {
   '/(public)/terms/': typeof publicTermsIndexRoute
   '/_authenticated/achievements/': typeof AuthenticatedAchievementsIndexRoute
   '/_authenticated/dashboard/': typeof AuthenticatedDashboardIndexRoute
+  '/_authenticated/profile/': typeof AuthenticatedProfileIndexRoute
+  '/_authenticated/settings/': typeof AuthenticatedSettingsIndexRoute
   '/(public)/u/$username/': typeof publicUUsernameIndexRoute
 }
 export interface FileRouteTypes {
@@ -166,8 +168,6 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/pay'
-    | '/profile'
-    | '/settings'
     | '/contact/'
     | '/cookies/'
     | '/leaderboard/'
@@ -178,13 +178,13 @@ export interface FileRouteTypes {
     | '/terms/'
     | '/achievements/'
     | '/dashboard/'
+    | '/profile/'
+    | '/settings/'
     | '/u/$username/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/pay'
-    | '/profile'
-    | '/settings'
     | '/contact'
     | '/cookies'
     | '/leaderboard'
@@ -195,13 +195,13 @@ export interface FileRouteTypes {
     | '/terms'
     | '/achievements'
     | '/dashboard'
+    | '/profile'
+    | '/settings'
     | '/u/$username'
   id:
     | '__root__'
     | '/_authenticated'
     | '/_authenticated/pay'
-    | '/_authenticated/profile'
-    | '/_authenticated/settings'
     | '/(public)/'
     | '/(public)/contact/'
     | '/(public)/cookies/'
@@ -213,6 +213,8 @@ export interface FileRouteTypes {
     | '/(public)/terms/'
     | '/_authenticated/achievements/'
     | '/_authenticated/dashboard/'
+    | '/_authenticated/profile/'
+    | '/_authenticated/settings/'
     | '/(public)/u/$username/'
   fileRoutesById: FileRoutesById
 }
@@ -246,25 +248,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof publicIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/settings': {
-      id: '/_authenticated/settings'
-      path: '/settings'
-      fullPath: '/settings'
-      preLoaderRoute: typeof AuthenticatedSettingsRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/profile': {
-      id: '/_authenticated/profile'
-      path: '/profile'
-      fullPath: '/profile'
-      preLoaderRoute: typeof AuthenticatedProfileRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
     '/_authenticated/pay': {
       id: '/_authenticated/pay'
       path: '/pay'
       fullPath: '/pay'
       preLoaderRoute: typeof AuthenticatedPayRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/settings/': {
+      id: '/_authenticated/settings/'
+      path: '/settings'
+      fullPath: '/settings/'
+      preLoaderRoute: typeof AuthenticatedSettingsIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/profile/': {
+      id: '/_authenticated/profile/'
+      path: '/profile'
+      fullPath: '/profile/'
+      preLoaderRoute: typeof AuthenticatedProfileIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/dashboard/': {
@@ -349,18 +351,18 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedPayRoute: typeof AuthenticatedPayRoute
-  AuthenticatedProfileRoute: typeof AuthenticatedProfileRoute
-  AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRoute
   AuthenticatedAchievementsIndexRoute: typeof AuthenticatedAchievementsIndexRoute
   AuthenticatedDashboardIndexRoute: typeof AuthenticatedDashboardIndexRoute
+  AuthenticatedProfileIndexRoute: typeof AuthenticatedProfileIndexRoute
+  AuthenticatedSettingsIndexRoute: typeof AuthenticatedSettingsIndexRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedPayRoute: AuthenticatedPayRoute,
-  AuthenticatedProfileRoute: AuthenticatedProfileRoute,
-  AuthenticatedSettingsRoute: AuthenticatedSettingsRoute,
   AuthenticatedAchievementsIndexRoute: AuthenticatedAchievementsIndexRoute,
   AuthenticatedDashboardIndexRoute: AuthenticatedDashboardIndexRoute,
+  AuthenticatedProfileIndexRoute: AuthenticatedProfileIndexRoute,
+  AuthenticatedSettingsIndexRoute: AuthenticatedSettingsIndexRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =

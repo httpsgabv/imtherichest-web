@@ -5,7 +5,7 @@ import { PublicProfileView } from "@/components/public-profile-view";
 import { useQuery } from "@tanstack/react-query";
 import { sessionQueryOptions } from "@/lib/auth/session";
 
-export const Route = createFileRoute("/_authenticated/profile")({
+export const Route = createFileRoute("/_authenticated/profile/")({
   head: () => ({ meta: [{ title: "My profile — ImTheRichest" }] }),
   component: MyProfilePage,
 });

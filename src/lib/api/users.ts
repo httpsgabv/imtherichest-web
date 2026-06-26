@@ -72,6 +72,20 @@ export interface Payment {
   createdAt: string;
 }
 
+export interface PrivacySettings {
+  publicProfile: boolean;
+  showTotalPaid: boolean;
+  showAchievements: boolean;
+  showActivity: boolean;
+}
+
+export interface NotificationSettings {
+  achievementAlerts: boolean;
+  rankAlerts: boolean;
+  paymentConfirmations: boolean;
+  marketingEmails: boolean;
+}
+
 export const profileQueryOptions = {
   queryKey: ["users", "me"] as const,
   queryFn: () => apiFetch<Profile>("/api/v1/users/me"),
@@ -114,3 +128,15 @@ export const publicUserPaymentsQueryOptions = (username: string) => ({
   staleTime: 60_000,
   enabled: !!username,
 });
+
+export const privacySettingsQueryOptions = {
+  queryKey: ["users", "me", "privacy"] as const,
+  queryFn: () => apiFetch<PrivacySettings>("/api/v1/users/me/settings/privacy"),
+  staleTime: 60_000,
+};
+
+export const notificationSettingsQueryOptions = {
+  queryKey: ["users", "me", "notifications"] as const,
+  queryFn: () => apiFetch<NotificationSettings>("/api/v1/users/me/settings/notifications"),
+  staleTime: 60_000,
+};
