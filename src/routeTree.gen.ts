@@ -14,8 +14,8 @@ import { Route as publicIndexRouteImport } from './routes/(public)/index'
 import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
 import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated/profile'
 import { Route as AuthenticatedPayRouteImport } from './routes/_authenticated/pay'
-import { Route as AuthenticatedAchievementsRouteImport } from './routes/_authenticated/achievements'
 import { Route as AuthenticatedDashboardIndexRouteImport } from './routes/_authenticated/dashboard/index'
+import { Route as AuthenticatedAchievementsIndexRouteImport } from './routes/_authenticated/achievements/index'
 import { Route as publicTermsIndexRouteImport } from './routes/(public)/terms/index'
 import { Route as publicRegisterIndexRouteImport } from './routes/(public)/register/index'
 import { Route as publicPrivacyIndexRouteImport } from './routes/(public)/privacy/index'
@@ -50,16 +50,16 @@ const AuthenticatedPayRoute = AuthenticatedPayRouteImport.update({
   path: '/pay',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-const AuthenticatedAchievementsRoute =
-  AuthenticatedAchievementsRouteImport.update({
-    id: '/achievements',
-    path: '/achievements',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
 const AuthenticatedDashboardIndexRoute =
   AuthenticatedDashboardIndexRouteImport.update({
     id: '/dashboard/',
     path: '/dashboard/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAchievementsIndexRoute =
+  AuthenticatedAchievementsIndexRouteImport.update({
+    id: '/achievements/',
+    path: '/achievements/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const publicTermsIndexRoute = publicTermsIndexRouteImport.update({
@@ -110,7 +110,6 @@ const publicUUsernameIndexRoute = publicUUsernameIndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof publicIndexRoute
-  '/achievements': typeof AuthenticatedAchievementsRoute
   '/pay': typeof AuthenticatedPayRoute
   '/profile': typeof AuthenticatedProfileRoute
   '/settings': typeof AuthenticatedSettingsRoute
@@ -122,12 +121,12 @@ export interface FileRoutesByFullPath {
   '/privacy/': typeof publicPrivacyIndexRoute
   '/register/': typeof publicRegisterIndexRoute
   '/terms/': typeof publicTermsIndexRoute
+  '/achievements/': typeof AuthenticatedAchievementsIndexRoute
   '/dashboard/': typeof AuthenticatedDashboardIndexRoute
   '/u/$username/': typeof publicUUsernameIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof publicIndexRoute
-  '/achievements': typeof AuthenticatedAchievementsRoute
   '/pay': typeof AuthenticatedPayRoute
   '/profile': typeof AuthenticatedProfileRoute
   '/settings': typeof AuthenticatedSettingsRoute
@@ -139,13 +138,13 @@ export interface FileRoutesByTo {
   '/privacy': typeof publicPrivacyIndexRoute
   '/register': typeof publicRegisterIndexRoute
   '/terms': typeof publicTermsIndexRoute
+  '/achievements': typeof AuthenticatedAchievementsIndexRoute
   '/dashboard': typeof AuthenticatedDashboardIndexRoute
   '/u/$username': typeof publicUUsernameIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
-  '/_authenticated/achievements': typeof AuthenticatedAchievementsRoute
   '/_authenticated/pay': typeof AuthenticatedPayRoute
   '/_authenticated/profile': typeof AuthenticatedProfileRoute
   '/_authenticated/settings': typeof AuthenticatedSettingsRoute
@@ -158,6 +157,7 @@ export interface FileRoutesById {
   '/(public)/privacy/': typeof publicPrivacyIndexRoute
   '/(public)/register/': typeof publicRegisterIndexRoute
   '/(public)/terms/': typeof publicTermsIndexRoute
+  '/_authenticated/achievements/': typeof AuthenticatedAchievementsIndexRoute
   '/_authenticated/dashboard/': typeof AuthenticatedDashboardIndexRoute
   '/(public)/u/$username/': typeof publicUUsernameIndexRoute
 }
@@ -165,7 +165,6 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/achievements'
     | '/pay'
     | '/profile'
     | '/settings'
@@ -177,12 +176,12 @@ export interface FileRouteTypes {
     | '/privacy/'
     | '/register/'
     | '/terms/'
+    | '/achievements/'
     | '/dashboard/'
     | '/u/$username/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/achievements'
     | '/pay'
     | '/profile'
     | '/settings'
@@ -194,12 +193,12 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/register'
     | '/terms'
+    | '/achievements'
     | '/dashboard'
     | '/u/$username'
   id:
     | '__root__'
     | '/_authenticated'
-    | '/_authenticated/achievements'
     | '/_authenticated/pay'
     | '/_authenticated/profile'
     | '/_authenticated/settings'
@@ -212,6 +211,7 @@ export interface FileRouteTypes {
     | '/(public)/privacy/'
     | '/(public)/register/'
     | '/(public)/terms/'
+    | '/_authenticated/achievements/'
     | '/_authenticated/dashboard/'
     | '/(public)/u/$username/'
   fileRoutesById: FileRoutesById
@@ -267,18 +267,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedPayRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/achievements': {
-      id: '/_authenticated/achievements'
-      path: '/achievements'
-      fullPath: '/achievements'
-      preLoaderRoute: typeof AuthenticatedAchievementsRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
     '/_authenticated/dashboard/': {
       id: '/_authenticated/dashboard/'
       path: '/dashboard'
       fullPath: '/dashboard/'
       preLoaderRoute: typeof AuthenticatedDashboardIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/achievements/': {
+      id: '/_authenticated/achievements/'
+      path: '/achievements'
+      fullPath: '/achievements/'
+      preLoaderRoute: typeof AuthenticatedAchievementsIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/(public)/terms/': {
@@ -348,18 +348,18 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedRouteRouteChildren {
-  AuthenticatedAchievementsRoute: typeof AuthenticatedAchievementsRoute
   AuthenticatedPayRoute: typeof AuthenticatedPayRoute
   AuthenticatedProfileRoute: typeof AuthenticatedProfileRoute
   AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRoute
+  AuthenticatedAchievementsIndexRoute: typeof AuthenticatedAchievementsIndexRoute
   AuthenticatedDashboardIndexRoute: typeof AuthenticatedDashboardIndexRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
-  AuthenticatedAchievementsRoute: AuthenticatedAchievementsRoute,
   AuthenticatedPayRoute: AuthenticatedPayRoute,
   AuthenticatedProfileRoute: AuthenticatedProfileRoute,
   AuthenticatedSettingsRoute: AuthenticatedSettingsRoute,
+  AuthenticatedAchievementsIndexRoute: AuthenticatedAchievementsIndexRoute,
   AuthenticatedDashboardIndexRoute: AuthenticatedDashboardIndexRoute,
 }
 
