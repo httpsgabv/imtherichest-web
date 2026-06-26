@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { publicUserPaymentsQueryOptions } from "@/lib/api/users";
-import { formatCurrency, formatDate, formatNumber } from "@/lib/format";
+import { centsToDecimal, formatCurrency, formatDate, formatNumber } from "@/lib/format";
 
 interface Props {
   username: string;
@@ -26,7 +26,7 @@ export function ProfileActivity({ username }: Props) {
               className="flex items-center justify-between border-b border-zinc-900 px-6 py-4"
             >
               <div>
-                <p className="text-sm text-zinc-100">Paid {formatCurrency(p.amount)}</p>
+                <p className="text-sm text-zinc-100">Paid {formatCurrency(centsToDecimal(p.amount))}</p>
                 <p className="text-xs text-zinc-500">{formatDate(p.createdAt)}</p>
               </div>
               <span className="text-sm font-semibold text-gold">+{formatNumber(p.points)} pts</span>

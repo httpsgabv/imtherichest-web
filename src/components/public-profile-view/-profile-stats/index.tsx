@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { publicProfileQueryOptions, publicUserAchievementsQueryOptions } from "@/lib/api/users";
 import { StatCard } from "@/components/stat-card";
-import { formatCurrency, formatNumber } from "@/lib/format";
+import { centsToDecimal, formatCurrency, formatNumber } from "@/lib/format";
 
 interface Props {
   username: string;
@@ -19,7 +19,7 @@ export function ProfileStats({ username }: Props) {
         <StatCard label="Total points" value={formatNumber(profile.points)} accent />
         <StatCard
           label="Total paid"
-          value={profile.totalPaid != null ? formatCurrency(profile.totalPaid) : "—"}
+          value={profile.totalPaid != null ? formatCurrency(centsToDecimal(profile.totalPaid)) : "—"}
         />
         <StatCard label="Achievements" value={achievements?.unlockedIds.length ?? "—"} />
       </div>

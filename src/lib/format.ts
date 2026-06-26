@@ -1,6 +1,8 @@
 export const formatNumber = (n: number): string =>
   new Intl.NumberFormat("en-US").format(n);
 
+export const centsToDecimal = (cents: number): number => cents / 100;
+
 export const formatCurrency = (n: number): string =>
   new Intl.NumberFormat("en-US", {
     style: "currency",

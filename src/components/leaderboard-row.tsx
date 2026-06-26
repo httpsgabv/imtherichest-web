@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { AvatarCircle } from "@/components/avatar-circle";
-import { formatNumber, formatCurrency } from "@/lib/format";
+import { centsToDecimal, formatCurrency, formatNumber } from "@/lib/format";
 import type { LeaderboardUser } from "@/lib/api/leaderboard";
 
 interface Props {
@@ -37,7 +37,7 @@ export const LeaderboardRow = ({ user, highlight, showPaid = true }: Props) => {
         <div className="hidden md:block text-right">
           <p className="text-xs text-zinc-500 uppercase tracking-widest">Paid</p>
           <p className="text-sm font-medium text-zinc-300">
-            {user.totalPaid != null ? formatCurrency(user.totalPaid) : "—"}
+            {user.totalPaid != null ? formatCurrency(centsToDecimal(user.totalPaid)) : "—"}
           </p>
         </div>
       ) : null}

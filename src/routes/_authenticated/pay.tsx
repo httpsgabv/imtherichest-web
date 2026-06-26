@@ -1,16 +1,17 @@
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
+import { toast } from "sonner";
 import { AppNav } from "@/components/app-nav";
 import { SiteFooter } from "@/components/site-footer";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
-import { useQuery } from "@tanstack/react-query";
-import { sessionQueryOptions } from "@/lib/auth/session";
-import { useAppStore } from "@/store/app-store";
-import { makePayment, type PaymentResult } from "@/services/payments-service";
-import { achievementById } from "@/data/achievements";
+import { createCheckoutSession } from "@/lib/api/payments";
+import { stripePromise } from "@/lib/stripe";
 import { formatCurrency, formatNumber } from "@/lib/format";
+
+// Warm up Stripe.js from the moment this page mounts.
+void stripePromise;
 
 export const Route = createFileRoute("/_authenticated/pay")({
   head: () => ({ meta: [{ title: "Make a payment — ImTheRichest" }] }),
@@ -20,81 +21,27 @@ export const Route = createFileRoute("/_authenticated/pay")({
 const QUICK = [5, 10, 25, 50, 100];
 
 function PayPage() {
-  const navigate = useNavigate();
-  const { data: session } = useQuery(sessionQueryOptions);
-  const userId = session?.user?.id;
-  const currentUser = useAppStore((s) => (userId ? (s.users[userId] ?? null) : null));
   const [amount, setAmount] = useState<number>(25);
   const [custom, setCustom] = useState<string>("");
-  const [result, setResult] = useState<PaymentResult | null>(null);
   const [termsAccepted, setTermsAccepted] = useState(false);
-
-  if (!currentUser) return null;
+  const [isLoading, setIsLoading] = useState(false);
 
   const effective = custom ? Number(custom) || 0 : amount;
 
-  const handlePay = () => {
-    if (effective <= 0) return;
-    const res = makePayment(currentUser.id, effective);
-    setResult(res);
-  };
+  const handlePay = async () => {
+    if (effective <= 0 || !termsAccepted || isLoading) return;
 
-  if (result) {
-    const unlocked = result.unlockedAchievements
-      .map((id) => achievementById(id))
-      .filter((a): a is NonNullable<typeof a> => Boolean(a));
-    return (
-      <div className="min-h-screen bg-surface text-zinc-300">
-        <AppNav />
-        <div className="mx-auto max-w-2xl px-6 pt-20 pb-32 text-center">
-          <div className="mx-auto size-24 bg-gold gold-pulse grid place-items-center text-zinc-950">
-            <span className="text-3xl font-black">★</span>
-          </div>
-          <h1 className="mt-8 text-4xl font-medium text-zinc-100">
-            You gained{" "}
-            <span className="gold-shimmer">+{formatNumber(Math.round(result.payment.amount))}</span>{" "}
-            points
-          </h1>
-          <p className="mt-3 text-sm text-zinc-500">
-            New rank: <span className="text-gold font-bold">#{result.newRank}</span>
-          </p>
-          {unlocked.length > 0 ? (
-            <div className="mt-10">
-              <p className="text-xs uppercase tracking-widest text-zinc-500">
-                Achievements unlocked
-              </p>
-              <div className="mt-4 flex flex-wrap justify-center gap-3">
-                {unlocked.map((a) => (
-                  <span
-                    key={a.id}
-                    className="bg-zinc-900 ring-1 ring-gold/30 px-3 py-1.5 text-xs text-gold"
-                  >
-                    {a.title}
-                  </span>
-                ))}
-              </div>
-            </div>
-          ) : null}
-          <div className="mt-12 flex flex-wrap justify-center gap-3">
-            <Link
-              to="/leaderboard"
-              className="bg-gold px-5 py-2.5 text-sm font-semibold text-zinc-950 hover:bg-gold-light"
-            >
-              View leaderboard
-            </Link>
-            <button
-              type="button"
-              onClick={() => navigate({ to: "/dashboard" })}
-              className="bg-zinc-900 px-5 py-2.5 text-sm font-semibold text-zinc-100 ring-1 ring-zinc-800 hover:bg-zinc-800"
-            >
-              Back to dashboard
-            </button>
-          </div>
-        </div>
-        <SiteFooter />
-      </div>
-    );
-  }
+    setIsLoading(true);
+    try {
+      const { checkoutUrl } = await createCheckoutSession(
+        Math.round(effective * 100),
+      );
+      window.location.href = checkoutUrl;
+    } catch {
+      toast.error("Could not start checkout. Please try again.");
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-surface text-zinc-300">
@@ -184,13 +131,13 @@ function PayPage() {
           <button
             type="button"
             onClick={handlePay}
-            disabled={effective <= 0 || !termsAccepted}
+            disabled={effective <= 0 || !termsAccepted || isLoading}
             className="mt-6 w-full bg-gold py-3 text-sm font-semibold text-zinc-950 hover:bg-gold-light transition-colors disabled:bg-zinc-700 disabled:text-zinc-500"
           >
-            Complete payment
+            {isLoading ? "Redirecting to checkout…" : "Complete payment"}
           </button>
           <p className="mt-4 text-center text-[11px] text-zinc-600">
-            Demo mode — no card is charged. Points and rankings persist in your browser.
+            Secured by Stripe. Your card details never touch our servers.
           </p>
         </div>
       </div>

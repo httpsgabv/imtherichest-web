@@ -12,6 +12,7 @@ import { type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { Toaster } from "@/components/ui/sonner";
 import { CookieConsent } from "@/components/cookie-consent";
+import { stripePromise } from "@/lib/stripe";
 
 function NotFoundComponent() {
   return (
@@ -125,6 +126,7 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  void stripePromise; // ensures Stripe.js loads from the very first page render
 
   return (
     <QueryClientProvider client={queryClient}>

@@ -1,0 +1,51 @@
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { z } from "zod";
+import { AppNav } from "@/components/app-nav";
+import { SiteFooter } from "@/components/site-footer";
+
+const searchSchema = z.object({
+  session_id: z.string().optional(),
+});
+
+export const Route = createFileRoute("/_authenticated/payment-success/")({
+  validateSearch: searchSchema,
+  head: () => ({ meta: [{ title: "Payment successful — ImTheRichest" }] }),
+  component: PaymentSuccessPage,
+});
+
+function PaymentSuccessPage() {
+  const navigate = useNavigate();
+
+  return (
+    <div className="min-h-screen bg-surface text-zinc-300">
+      <AppNav />
+      <div className="mx-auto max-w-2xl px-6 pt-20 pb-32 text-center">
+        <div className="mx-auto size-24 bg-gold gold-pulse grid place-items-center text-zinc-950">
+          <span className="text-3xl font-black">★</span>
+        </div>
+        <h1 className="mt-8 text-4xl font-medium text-zinc-100">
+          Payment received
+        </h1>
+        <p className="mt-3 text-sm text-zinc-500">
+          Your points will appear on your dashboard shortly.
+        </p>
+        <div className="mt-12 flex flex-wrap justify-center gap-3">
+          <Link
+            to="/leaderboard"
+            className="bg-gold px-5 py-2.5 text-sm font-semibold text-zinc-950 hover:bg-gold-light"
+          >
+            View leaderboard
+          </Link>
+          <button
+            type="button"
+            onClick={() => navigate({ to: "/dashboard" })}
+            className="bg-zinc-900 px-5 py-2.5 text-sm font-semibold text-zinc-100 ring-1 ring-zinc-800 hover:bg-zinc-800"
+          >
+            Back to dashboard
+          </button>
+        </div>
+      </div>
+      <SiteFooter />
+    </div>
+  );
+}

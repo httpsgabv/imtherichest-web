@@ -14,6 +14,8 @@ import { Route as publicIndexRouteImport } from './routes/(public)/index'
 import { Route as AuthenticatedPayRouteImport } from './routes/_authenticated/pay'
 import { Route as AuthenticatedSettingsIndexRouteImport } from './routes/_authenticated/settings/index'
 import { Route as AuthenticatedProfileIndexRouteImport } from './routes/_authenticated/profile/index'
+import { Route as AuthenticatedPaymentSuccessIndexRouteImport } from './routes/_authenticated/payment-success/index'
+import { Route as AuthenticatedPaymentCancelIndexRouteImport } from './routes/_authenticated/payment-cancel/index'
 import { Route as AuthenticatedDashboardIndexRouteImport } from './routes/_authenticated/dashboard/index'
 import { Route as AuthenticatedAchievementsIndexRouteImport } from './routes/_authenticated/achievements/index'
 import { Route as publicTermsIndexRouteImport } from './routes/(public)/terms/index'
@@ -50,6 +52,18 @@ const AuthenticatedProfileIndexRoute =
   AuthenticatedProfileIndexRouteImport.update({
     id: '/profile/',
     path: '/profile/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedPaymentSuccessIndexRoute =
+  AuthenticatedPaymentSuccessIndexRouteImport.update({
+    id: '/payment-success/',
+    path: '/payment-success/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedPaymentCancelIndexRoute =
+  AuthenticatedPaymentCancelIndexRouteImport.update({
+    id: '/payment-cancel/',
+    path: '/payment-cancel/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedDashboardIndexRoute =
@@ -123,6 +137,8 @@ export interface FileRoutesByFullPath {
   '/terms/': typeof publicTermsIndexRoute
   '/achievements/': typeof AuthenticatedAchievementsIndexRoute
   '/dashboard/': typeof AuthenticatedDashboardIndexRoute
+  '/payment-cancel/': typeof AuthenticatedPaymentCancelIndexRoute
+  '/payment-success/': typeof AuthenticatedPaymentSuccessIndexRoute
   '/profile/': typeof AuthenticatedProfileIndexRoute
   '/settings/': typeof AuthenticatedSettingsIndexRoute
   '/u/$username/': typeof publicUUsernameIndexRoute
@@ -140,6 +156,8 @@ export interface FileRoutesByTo {
   '/terms': typeof publicTermsIndexRoute
   '/achievements': typeof AuthenticatedAchievementsIndexRoute
   '/dashboard': typeof AuthenticatedDashboardIndexRoute
+  '/payment-cancel': typeof AuthenticatedPaymentCancelIndexRoute
+  '/payment-success': typeof AuthenticatedPaymentSuccessIndexRoute
   '/profile': typeof AuthenticatedProfileIndexRoute
   '/settings': typeof AuthenticatedSettingsIndexRoute
   '/u/$username': typeof publicUUsernameIndexRoute
@@ -159,6 +177,8 @@ export interface FileRoutesById {
   '/(public)/terms/': typeof publicTermsIndexRoute
   '/_authenticated/achievements/': typeof AuthenticatedAchievementsIndexRoute
   '/_authenticated/dashboard/': typeof AuthenticatedDashboardIndexRoute
+  '/_authenticated/payment-cancel/': typeof AuthenticatedPaymentCancelIndexRoute
+  '/_authenticated/payment-success/': typeof AuthenticatedPaymentSuccessIndexRoute
   '/_authenticated/profile/': typeof AuthenticatedProfileIndexRoute
   '/_authenticated/settings/': typeof AuthenticatedSettingsIndexRoute
   '/(public)/u/$username/': typeof publicUUsernameIndexRoute
@@ -178,6 +198,8 @@ export interface FileRouteTypes {
     | '/terms/'
     | '/achievements/'
     | '/dashboard/'
+    | '/payment-cancel/'
+    | '/payment-success/'
     | '/profile/'
     | '/settings/'
     | '/u/$username/'
@@ -195,6 +217,8 @@ export interface FileRouteTypes {
     | '/terms'
     | '/achievements'
     | '/dashboard'
+    | '/payment-cancel'
+    | '/payment-success'
     | '/profile'
     | '/settings'
     | '/u/$username'
@@ -213,6 +237,8 @@ export interface FileRouteTypes {
     | '/(public)/terms/'
     | '/_authenticated/achievements/'
     | '/_authenticated/dashboard/'
+    | '/_authenticated/payment-cancel/'
+    | '/_authenticated/payment-success/'
     | '/_authenticated/profile/'
     | '/_authenticated/settings/'
     | '/(public)/u/$username/'
@@ -267,6 +293,20 @@ declare module '@tanstack/react-router' {
       path: '/profile'
       fullPath: '/profile/'
       preLoaderRoute: typeof AuthenticatedProfileIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/payment-success/': {
+      id: '/_authenticated/payment-success/'
+      path: '/payment-success'
+      fullPath: '/payment-success/'
+      preLoaderRoute: typeof AuthenticatedPaymentSuccessIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/payment-cancel/': {
+      id: '/_authenticated/payment-cancel/'
+      path: '/payment-cancel'
+      fullPath: '/payment-cancel/'
+      preLoaderRoute: typeof AuthenticatedPaymentCancelIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/dashboard/': {
@@ -353,6 +393,8 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedPayRoute: typeof AuthenticatedPayRoute
   AuthenticatedAchievementsIndexRoute: typeof AuthenticatedAchievementsIndexRoute
   AuthenticatedDashboardIndexRoute: typeof AuthenticatedDashboardIndexRoute
+  AuthenticatedPaymentCancelIndexRoute: typeof AuthenticatedPaymentCancelIndexRoute
+  AuthenticatedPaymentSuccessIndexRoute: typeof AuthenticatedPaymentSuccessIndexRoute
   AuthenticatedProfileIndexRoute: typeof AuthenticatedProfileIndexRoute
   AuthenticatedSettingsIndexRoute: typeof AuthenticatedSettingsIndexRoute
 }
@@ -361,6 +403,8 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedPayRoute: AuthenticatedPayRoute,
   AuthenticatedAchievementsIndexRoute: AuthenticatedAchievementsIndexRoute,
   AuthenticatedDashboardIndexRoute: AuthenticatedDashboardIndexRoute,
+  AuthenticatedPaymentCancelIndexRoute: AuthenticatedPaymentCancelIndexRoute,
+  AuthenticatedPaymentSuccessIndexRoute: AuthenticatedPaymentSuccessIndexRoute,
   AuthenticatedProfileIndexRoute: AuthenticatedProfileIndexRoute,
   AuthenticatedSettingsIndexRoute: AuthenticatedSettingsIndexRoute,
 }
