@@ -47,6 +47,7 @@ export function AccountTab({ onDeleteSuccess }: Props) {
     mutationFn: () => apiFetch<void>("/api/v1/users/me", { method: "DELETE" }),
     onSuccess: async () => {
       await authClient.signOut();
+      queryClient.removeQueries({ queryKey: ["users"] });
       await queryClient.invalidateQueries({ queryKey: sessionQueryKey });
       onDeleteSuccess();
     },

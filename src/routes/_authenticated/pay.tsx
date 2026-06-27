@@ -33,9 +33,7 @@ function PayPage() {
 
     setIsLoading(true);
     try {
-      const { checkoutUrl } = await createCheckoutSession(
-        Math.round(effective * 100),
-      );
+      const { checkoutUrl } = await createCheckoutSession(Math.round(effective * 100));
       window.location.href = checkoutUrl;
     } catch {
       toast.error("Could not start checkout. Please try again.");

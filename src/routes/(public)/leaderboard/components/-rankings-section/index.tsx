@@ -27,7 +27,7 @@ export function RankingsSection() {
             placeholder="Search by name or @username"
             className="w-full sm:w-64 bg-zinc-900 border-zinc-800 rounded-none"
           />
-          <Tabs value={tab} onValueChange={setTab}>
+          {/* <Tabs value={tab} onValueChange={setTab}>
             <TabsList className="rounded-none bg-zinc-900">
               <TabsTrigger value="today" className="rounded-none text-xs">
                 Today
@@ -42,7 +42,7 @@ export function RankingsSection() {
                 All time
               </TabsTrigger>
             </TabsList>
-          </Tabs>
+          </Tabs> */}
         </div>
       </div>
       <div className="bg-zinc-900/30 ring-1 ring-white/5">

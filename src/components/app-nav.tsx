@@ -11,6 +11,7 @@ export const AppNav = () => {
 
   const handleSignOut = async () => {
     await authClient.signOut();
+    queryClient.removeQueries({ queryKey: ["users"] });
     await queryClient.invalidateQueries({ queryKey: sessionQueryKey });
     navigate({ to: "/login" });
   };
